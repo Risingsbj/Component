@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>轮播</title>
+	<style type="text/css">
+		ul,li{
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		.carousel{
+			position: relative;
+			width: 300px;
+			height: 200px;
+			overflow: hidden;
+		}
+		.carousel .img-ct{
+			position: absolute;
+			height:200px;
+			width: 1200px;
+		}
+		.carousel .img-ct:after{
+			content: "";
+			display: block;
+			clear: both;
+		}
+		.carousel .img-ct>li{
+			float: left;
+		}
+		.carousel .img-ct img{
+			width: 300px;
+			height: 200px;
+		}
+		.carousel .btn{
+			position: absolute;
+			top: 50%;
+			margin-top: -15px;
+			width: 30px;
+			height: 30px;
+			border-radius: 50%;
+			text-decoration: none;
+			color: #fff;
+			background-color: #333;
+			opacity: 0.6;
+			display: block;
+			text-align: center;
+			font-size: 18px;
+			line-height: 30px;
+		}
+		.carousel .btn-pre{
+			left: 10px;
+		}
+		.carousel .btn-next{
+			right: 10px;
+		}
+		.carousel .bullet-ct{
+			position: absolute;
+			bottom: 20px;
+			left: 0;
+			right: 0;
+			text-align: center;
+		}
+		.carousel .bullet{
+			/*position: absolute;
+			left: 50%;
+			margin-left: -60px;
+			bottom: 20px;*/
+			display: inline-block;
+		}
+		/*.carousel .bullet:after{
+			content: "";
+			display: block;
+			clear: both;
+		}*/
+		.carousel .bullet>li{
+			/*float: left;*/
+			display: inline-block;
+			width: 20px;
+			height: 6px;
+			border-radius: 3px;
+			background-color: #fff;
+			margin: 0 5px;
+		}
+		.carousel .bullet .active{
+			background-color: #666;
+		}
+	</style>
+</head>
+<body>
+	<div class="carousel">
+		<ul class="img-ct">
+			<li data-index=0><a href=""><img src="http://img5.178.com/news/201609/267213179743/267214629842.jpg" alt="1.jpg"></a></li>
+			<li data-index=1><a href=""><img src="http://i3.article.fd.zol-img.com.cn/t_s640x2000/g5/M00/0F/09/ChMkJ1fJOs2IWVWFAALuDzXh-ZcAAU7ZAKj4RwAAu4n509.jpg" alt="2.jpg"></a></li>
+			<li data-index=2><a href=""><img src="http://www.bz55.com/uploads/allimg/160615/140-1606150SP7.jpg" alt="3.jpg"></a></li>
+			<li data-index=3><a href=""><img src="http://i1.hdslb.com/bfs/archive/aad5c95255cae1225e643991880e61cafe1bfbd2.jpg" alt="4.jpg"></a></li>
+		</ul>
+		<a class="btn btn-pre" href="#">&lt</a>
+		<a class="btn btn-next" href="#">&gt</a>
+		<div class="bullet-ct">
+			<ul class="bullet">
+				<li class="active"></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			var $imgCt=$(".img-ct"),
+				$preBtn=$(".btn-pre"),
+				$nextBtn=$(".btn-next"),
+				$bullet=$(".bullet");
+				$bulletLi=$(".bullet-ct .bullet li")
+			var $firstImg=$imgCt.find("li").first(),
+				$lastImg=$imgCt.find("li").last();
+			var curPageIndex=0;
+			var	imgLength=$imgCt.children().length;
+			var isAnimate=false;
+
+			$imgCt.prepend($lastImg.clone())
+			$imgCt.append($firstImg.clone())
+			$imgCt.width($firstImg.width() * $imgCt.children().length)
+			$imgCt.css("left","-300px")
+
+			$preBtn.on("click",function(e){
+				e.preventDefault();
+				playPre(1);
+			})
+			$nextBtn.on("click",function(e){
+				e.preventDefault();
+				playNext(1);
+			})
+
+			function playNext(len){
+				if(isAnimate) return;
+				isAnimate=true;
+				$imgCt.animate({
+					left:"-="+(300*len)
+				},function(){
+					curPageIndex=curPageIndex+len;
+					if(curPageIndex===imgLength){
+						$imgCt.css({"left":"-300px"})
+						curPageIndex=0;
+					}
+					isAnimate=false;
+					setBullet();
+				})
+			}
+			function playPre(len){
+				if(isAnimate) return;
+				isAnimate=true;
+				$imgCt.animate({
+					left:"+="+(300*len)
+				},function(){
+					curPageIndex=curPageIndex-len;
+					if(curPageIndex<0){
+						$imgCt.css("left",-(imgLength * $firstImg.width()));
+						curPageIndex=imgLength-1;
+					}
+					isAnimate=false;
+					setBullet();
+				})
+			}
+			function setBullet(){
+				$bullet.children()
+				.removeClass("active")
+				.eq(curPageIndex)
+				.addClass("active");
+			}
+			$bulletLi.on("click",function(){
+            	var len;
+            	var index = $(this).index();
+            	if(index<curPageIndex){
+               	 len = curPageIndex - index;
+                	playPre(len);
+            	}
+            	else{
+               	 len = index - curPageIndex;
+                	playNext(len);
+            	}
+            })
+		})
+	</script>
+</body>
+</html>

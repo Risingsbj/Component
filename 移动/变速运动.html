@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<title>变速运动</title>
+<style type="text/css">
+	body,div,span{
+		margin: 0;
+		padding:0;
+	}
+	body #div1{
+		position:relative;
+		top:0;
+		left:-200px;
+		width: 200px;
+		height:200px;
+		background: red;
+	}
+	body div span{
+		position: absolute;
+		top:75px;
+		left:200px;
+		width: 20px;
+		height:50px;
+        background:blue;
+	}
+</style>
+<script>
+    window.onload=function(){
+    	var oDiv=document.getElementById("div1");
+        oDiv.onmouseover=function(){
+        	startMove(0);
+        }
+        oDiv.onmouseout=function(){
+        	startMove(-200);
+        }
+    }
+    var timer=null;
+    function startMove(iTarget){
+    	clearInterval(timer);
+    	var oDiv=document.getElementById("div1");
+    	timer=setInterval(function(){
+            var speed=(iTarget-oDiv.offsetLeft)/20;
+            speed=speed>0?Math.ceil(speed):Math.floor(speed);
+    		if(oDiv.offsetLeft==iTarget){
+    			clearInterval(timer);
+    		}else{
+    			oDiv.style.left=oDiv.offsetLeft+speed+"px";
+    		}
+    	},30)
+    }
+</script>
+</head>
+<body>
+	<div id="div1"><span id="share">分享</span></div>
+</body>
+</html>

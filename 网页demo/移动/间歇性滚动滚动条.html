@@ -1,0 +1,27 @@
+<script>
+var area=document.getElementById('#moocbox');
+var iLiHeight=24px;
+area.innerHTML+=area.innerHTML;
+area.scrollTop=0;
+var speed=50;
+var delay=2000;
+var time;
+function startMove(){
+	area.scrollTop++;
+	time=setInterval("scrollUp()",speed);
+}
+function scrollUp(){
+	//area.scrollTop++；
+	if(area.scrollTop%iLiHeight==0){
+		clearInterval(time);
+		setTimeout("area.scrollTop++",delay);
+	}else{
+		area.scrollTop++;
+		if(area.scrollTop>=area.scrollHeight/2){
+			area.scrollTop=0;
+		}
+	}
+}
+setTimeout("startMove()",delay);
+
+</script>

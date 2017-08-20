@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+  <meta charset="utf-8">
+  <title>瀑布流布局</title>
+  <style>
+    .content{
+      position: relative;
+      margin: 0 auto;
+      background:red;
+      width:100px;
+    }
+
+    .item{
+      position: absolute;
+      width: 200px;
+      margin-right: 10px;
+      margin-top: 5px;
+      transition: all 1.5s;
+      left:50%;
+      top:0;
+    }
+  </style>
+</head>
+<body>
+<div class="content">
+<div class="item">
+    <img src="https://unsplash.it/200/300" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/400" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/500" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/200" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/450" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/630" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/250" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/150" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/300" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/500" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/300" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/100" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/450" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/630" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/300" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/400" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/500" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/200" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/450" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/630" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/250" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/150" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/300" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/500" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/300" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/100" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/450" alt="">
+  </div>
+  <div class="item">
+    <img src="https://unsplash.it/200/630" alt="">
+  </div>
+</div>
+<script type="text/javascript">
+  var $item = $('.item');
+  var itemWidth = $item.outerWidth(true)
+  var cloumNum
+  var heightArr=[];
+  setView()
+  $(window).resize(function(){
+     setView()
+   })
+
+  function init(){
+    cloumNum=parseInt($('.content').outerWidth(true)/itemWidth);
+    $('.content').css({'width':cloumNum*itemWidth});
+    for (i=0;i<cloumNum;i++){
+    heightArr[i]=0;
+  }}//数组初始化
+
+  function setView(){
+    init()
+    postImg();
+  }//页面布局
+
+  function postImg(){$item.each(function(i,element){
+    var cloum=heightArr.indexOf(Math.min.apply(null,heightArr));
+    $(this).css({
+      'left':itemWidth*cloum+'px',
+      'top':heightArr[cloum]+'px'
+    })
+    heightArr[cloum]+=$(this).outerHeight(true)
+  })}//放置图片
+</script>
+</body>
+</html>

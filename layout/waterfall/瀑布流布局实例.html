@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>waterfull-lazyload-ajax demo</title>
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<link href="" rel="stylesheet">
+	<style>
+		html,body,ul,li,p,div{
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		ul,li{
+			list-style: none;
+		}
+
+	  .wrap{
+	  	width: 900px;
+			margin: 0 auto;
+	  }
+
+		.clearfix:after{
+			content: '';
+			display: block;
+			clear: both;
+		}
+		#pic-ct{
+			position: relative;
+		}
+		#pic-ct .item{
+			position: absolute;
+			padding: 0 0 10px 0;
+			width: 280px;
+			margin: 10px;
+			border: 1px solid #DFDFDF;
+			background: #FFF;
+			opacity: 0;
+			transition: all .8s;
+		}
+		#pic-ct .item img{
+		    margin: 10px;
+		    width: 260px;
+		}
+		#pic-ct .item .header{
+			height: 25px;
+		    margin: 0 12px;
+		    border-bottom: 1px solid #DBDBDB;
+		}
+		#pic-ct .desp{
+			font-size: 12px;
+			line-height: 1.8;
+		  margin: 10px 15px 0;
+		  color: #777371;
+		}
+		#load{
+			visibility: hidden;
+			height: 20px;
+		}
+		.hide{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap">
+	    <div class="ct-waterfall">
+	    	<ul id="pic-ct" class="clearfix" style="height: 1312px;">
+	    		<!--<li class="item">
+	    			<a href="#" class="link">
+	    				<img src="http://s.img.mix.sina.com.cn/auto/resize?img=http%3A%2F%2Fwww.sinaimg.cn%2Fdy%2Fslidenews%2F5_img%2F2016_09%2F453_75615_657883.jpg&size=250_0" alt="">
+	    			</a>
+	    			<h4 class="header">标题</h4>
+	    			<p class="desp">
+	    				当地时间2016年3月1日，在东部与亲俄武装作战中受伤的乌克兰士兵接受海豚治疗。
+	    			</p>
+	    		</li>-->
+
+				<!-- 用于计算 item 宽度和列数，但不展示出来-->
+				<li class="item hide"></li>
+	    		<li class="item" style="left: 0px; top: 0px; opacity: 1;"> <a href="http://slide.tech.sina.com.cn/d/slide_5_453_84959.html/d/2" class="link"><img src="http://n.sinaimg.cn/tech/transform/20170529/aeLr-fyfquww9333810.jpg" alt=""></a> <h4 class="header">防坠毁无人机百米深渊测试</h4><p class="desp">欧洲航天局(ESA)制作了一个“防坠毁”无人机可以完成火星探测任务。该无人机未来将帮助火星定居者绘制人类无法到达地点的地图来探索火星上的熔岩管。</p></li>
+	    		<li class="item" style="left: 300px; top: 0px; opacity: 1;"> <a href="http://slide.tech.sina.com.cn/d/slide_5_453_84962.html/d/2" class="link"><img src="http://n.sinaimg.cn/tech/transform/20170529/4IHe-fyfquww9334882.jpg" alt=""></a> <h4 class="header">印度大象误入农田不幸触电身亡</h4><p class="desp">在印度西孟加拉邦，一头大象在当地Debi Simul村庄的稻田里漫步，不慎触碰到农田周边的电栅栏，被电死。</p></li>
+	    		<li class="item" style="left: 600px; top: 0px; opacity: 1;"> <a href="http://slide.tech.sina.com.cn/d/slide_5_453_84957.html/d/2" class="link"><img src="http://n.sinaimg.cn/tech/transform/20170529/DQOe-fyfquxv3885945.jpg" alt=""></a> <h4 class="header">拳师犬:一只欢快的表情包</h4><p class="desp">匈牙利布达佩斯摄影师Tamas Szarka用镜头捕捉了自己的爱犬Strawberry的欢快表情包。</p></li>
+	    		<li class="item" style="left: 600px; top: 307px; opacity: 1;"> <a href="http://slide.tech.sina.com.cn/d/slide_5_453_84864.html/d/2" class="link"><img src="http://n.sinaimg.cn/tech/transform/20170528/Qm86-fyfrfvv4826740.jpg" alt=""></a> <h4 class="header">艺术家手绘脑神经</h4><p class="desp">它们是人类大脑纷繁复杂的构造与艺术和科学的刺激碰撞。</p></li>
+	    		<li class="item" style="left: 300px; top: 328px; opacity: 1;"> <a href="http://slide.tech.sina.com.cn/d/slide_5_453_84862.html/d/2" class="link"><img src="http://n.sinaimg.cn/tech/transform/20170528/18GV-fyfrfvv4826017.jpg" alt=""></a> <h4 class="header">马来男子把眼镜蛇养成家宠</h4><p class="desp">马来西亚32岁男子把眼镜蛇训成了乖巧的家宠。</p></li>
+	    		<li class="item" style="left: 0px; top: 349px; opacity: 1;"> <a href="http://slide.tech.sina.com.cn/d/slide_5_453_84861.html/d/2" class="link"><img src="http://n.sinaimg.cn/tech/transform/20170528/jgnv-fyfquym1163608.jpg" alt=""></a> <h4 class="header">冰岛海鸥吃面包把自己卡住</h4><p class="desp">冰岛阿克拉内斯一只蠢萌的海鸥就干了这么一件蠢事。</p></li>
+	    		<li class="item" style="left: 600px; top: 614px; opacity: 1;"> <a href="http://slide.tech.sina.com.cn/d/slide_5_453_84658.html/d/2" class="link"><img src="http://n.sinaimg.cn/tech/transform/20170527/c4GO-fyfrfvv4574738.jpg" alt=""></a> <h4 class="header">飞行员飞机驾驶舱里拍夜空美景</h4><p class="desp">一组由飞行员拍摄于波音747驾驶舱的舱内舱外风景照片引发众人关注，人们不仅赞叹从驾驶舱拍下的照片时而诡秘时而壮丽，更是羡慕这位飞行员兼摄影师的工作。</p></li>
+	    		<li class="item" style="left: 300px; top: 635px; opacity: 1;"> <a href="http://slide.tech.sina.com.cn/d/slide_5_453_84659.html/d/2" class="link"><img src="http://n.sinaimg.cn/tech/transform/20170527/AK39-fyfrfvv4575640.jpg" alt=""></a> <h4 class="header">日本壁虎和玩具玩耍时咧嘴笑</h4><p class="desp">日本一只名叫琥珀（Kohaku）的壁虎走红网络。它在和与它长相相似的玩具壁虎玩耍时，露出了一个惬意满足的“笑容”。</p></li>
+	    		<li class="item" style="left: 0px; top: 656px; opacity: 1;"> <a href="http://slide.tech.sina.com.cn/d/slide_5_453_84432.html/d/2" class="link"><img src="http://n.sinaimg.cn/tech/transform/20170526/_PKG-fyfrfvv4335698.jpg" alt=""></a> <h4 class="header">卡西尼号临终杰作</h4><p class="desp">美国宇航局“卡西尼”号探测器距离土星越来越近，即将结束自己辉煌的征程。</p></li>
+	    		<li class="item" style="left: 0px; top: 963px; opacity: 1;"> <a href="http://slide.tech.sina.com.cn/d/slide_5_453_84663.html/d/2" class="link"><img src="http://n.sinaimg.cn/tech/transform/20170527/QUCq-fyfquxv3497607.jpg" alt=""></a> <h4 class="header">全球首款电子墓碑展示死者生平</h4><p class="desp">世界首块电子墓碑近日在斯洛文尼亚第二大城市马里博尔的一处墓地现身。这块墓碑搭载48英寸触摸显示屏，可以展示死者生前的照片、视频和其他电子内容，并且为防雨设计。</p></li>
+	    	</ul>
+	    	<div id="load">我是看不见的</div>
+	    </div>
+	</div>
+
+
+<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<script>
+
+
+//1. 获取数据
+//2. 把数据变为 Dom，通过瀑布流的方式放到页面上
+//3. 当滚动到底部的时候， --》 1
+
+var curPage = 1
+var perPageCount = 10
+var colSumHeight = []
+var nodeWidth = $('.item').outerWidth(true)
+var colNum = parseInt($('#pic-ct').width()/nodeWidth)
+for(var i = 0; i < colNum.length; i++){
+	colSumHeight[i] = 0
+}
+
+var isDataArrive = true
+
+start()
+
+function start(){
+
+	getData(function(newsList){
+		console.log(newsList)
+		isDataArrive = true
+		$.each(newsList, function(idx, news){
+			var $node = getNode(news)
+			$node.find('img').load(function(){
+				$('#pic-ct').append($node)
+				console.log($node, 'loaded...')
+				waterFallPlace($node)
+			})
+		})
+	})
+	isDataArrive = false	
+}
+
+
+
+$(window).scroll(function(){
+	if(!isDataArrive) return
+		
+	if(isVisible($('#load'))){
+		start()
+	}
+})
+
+
+function getData(callback){
+		$.ajax({
+			url: 'http://platform.sina.com.cn/slide/album_tech',
+			dataType: 'jsonp',   
+			jsonp:"jsoncallback",
+			data: {
+				app_key: '1271687855',
+				num: perPageCount,
+				page: curPage
+			}
+		}).done(function(ret){
+			if(ret && ret.status && ret.status.code === "0"){
+				callback(ret.data);   //如果数据没问题，那么生成节点并摆放好位置
+				curPage++
+			}else{
+				console.log('get error data');
+			}
+		});
+}
+
+
+function getNode(item){
+	var tpl = ''
+		tpl += '<li class="item">';
+		tpl += ' <a href="'+ item.url +'" class="link"><img src="' + item.img_url + '" alt=""></a>';
+		tpl += ' <h4 class="header">'+ item.short_name +'</h4>';
+		tpl += '<p class="desp">'+item.short_intro+'</p>';
+		tpl += '</li>';
+	
+	return $(tpl)
+}
+
+function waterFallPlace($node){
+
+		var idx = 0,
+			  minSumHeight = colSumHeight[0];
+
+		for(var i=0;i<colSumHeight.length; i++){
+			if(colSumHeight[i] < minSumHeight){
+				idx = i;
+				minSumHeight = colSumHeight[i];
+			}
+		}
+
+		$node.css({
+			left: nodeWidth*idx,
+			top: minSumHeight,
+			opacity: 1
+		});
+
+		colSumHeight[idx] = $node.outerHeight(true) + colSumHeight[idx];
+		$('#pic-ct').height(Math.max.apply(null,colSumHeight));
+
+}
+
+	function isVisible($el){
+	  var scrollH = $(window).scrollTop(),
+	  	  winH = $(window).height(),
+	  	  top = $el.offset().top;
+
+  	  if(top < winH + scrollH){
+  	  	return true;
+  	  }else{
+  	  	return false;
+  	  }
+	}
+
+
+
+
+	
+
+/*
+
+
+
+	var clock;
+	$(window).on('scroll', function(){
+    //用户鼠标滚轮滚动一次，有多次事件响应。下面的 setTimeout 主要是为性能考虑，只在最后一次事件响应的时候执行 checkshow
+    if(clock){
+      clearTimeout(clock);
+    }
+    clock = setTimeout(function(){
+      checkShow();
+    }, 100);
+	});
+
+  // 用户第一次打开页面，还未滚动窗口的时候需要执行一次 checkShow
+	checkShow();
+
+*/
+
+	function checkShow(){
+		if(isShow($('#load'))){
+			loadAndPlace();
+		}
+	}
+
+	function isShow($el){
+	  var scrollH = $(window).scrollTop(),
+	  	  winH = $(window).height(),
+	  	  top = $el.offset().top;
+
+  	  if(top < winH + scrollH){
+  	  	return true;
+  	  }else{
+  	  	return false;
+  	  }
+	}
+
+
+
+// 获取数据，并且摆放位置
+
+  var curPage = 1,
+		  perPageCount = 9;
+
+	function loadAndPlace(){
+		$.ajax({
+			url: 'http://platform.sina.com.cn/slide/album_tech',
+			dataType: 'jsonp',   //这里使用了新浪新闻的 jsonp 接口，大家可以直接看数据， 如： http://platform.sina.com.cn/slide/album_tech?jsoncallback=func&app_key=1271687855&num=3&page=4
+			jsonp:"jsoncallback",
+			data: {
+				app_key: '1271687855',
+				num: perPageCount,
+				page: curPage
+			}
+		}).done(function(ret){
+			if(ret && ret.status && ret.status.code === "0"){
+				place(ret.data);   //如果数据没问题，那么生成节点并摆放好位置
+				curPage++
+			}else{
+				console.log('get error data');
+			}
+		});
+	}
+
+
+
+function place(nodeList){
+	console.log(nodeList);
+	$.each(nodeList, function(index,item){
+		var $node = getNode(item)
+		$node.find('img').load(function(){
+			$('#pic-ct').append($node)
+			waterFallPlace($node)
+		})
+	})
+
+	/*
+
+	var $nodes = renderData(nodeList);  //节点生成后添加到页面上
+
+	var defereds = [];  //创建存储 defered 对象的数组
+	$nodes.find('img').each(function(){
+		var defer = $.Deferred();
+		$(this).load(function(){
+			defer.resolve();
+		});   //当每个图片加载完成后，执行 resolve
+		defereds.push(defer);
+	});
+	$.when.apply(null,defereds).done(function() { //当所有的图片都执行 resolve 后，即全部图片加载后，执行下面的内容
+		console.log('new images all loaded ...');
+		//当节点里的图片全部加载后再使用瀑布流计算，否则会因为图片未加载 item 高度计算错误导致瀑布流高度计算出问题
+		waterFallPlace($nodes);
+	});
+	*/
+}
+
+
+
+// 瀑布流
+
+var colSumHeight = [],
+		nodeWidth = $('.item').outerWidth(true),
+		colNum = parseInt($('#pic-ct').width()/nodeWidth);
+
+for(var i=0; i<colNum; i++){
+	colSumHeight.push(0)
+}
+
+function waterFallPlace($nodes){
+	$nodes.each(function(){
+		var $cur = $(this);
+		//colSumHeight = [100, 250, 80, 200]
+
+		var idx = 0,
+			  minSumHeight = colSumHeight[0];
+
+		for(var i=0;i<colSumHeight.length; i++){
+			if(colSumHeight[i] < minSumHeight){
+				idx = i;
+				minSumHeight = colSumHeight[i];
+			}
+		}
+
+		$cur.css({
+			left: nodeWidth*idx,
+			top: minSumHeight,
+			opacity: 1
+		});
+
+		colSumHeight[idx] = $cur.outerHeight(true) + colSumHeight[idx];
+		$('#pic-ct').height(Math.max.apply(null,colSumHeight));
+	});
+
+}
+
+
+
+function getNode(item){
+	var tpl = ''
+		tpl += '<li class="item">';
+		tpl += ' <a href="'+ item.url +'" class="link"><img src="' + item.img_url + '" alt=""></a>';
+		tpl += ' <h4 class="header">'+ item.short_name +'</h4>';
+		tpl += '<p class="desp">'+item.short_intro+'</p>';
+		tpl += '</li>';
+	
+	return $(tpl)
+}
+
+
+function renderData(items){
+	var tpl = '',
+		$nodes;
+	for(var i = 0;i<items.length;i++){
+		tpl += '<li class="item">';
+		tpl += ' <a href="'+ items[i].url +'" class="link"><img src="' + items[i].img_url + '" alt=""></a>';
+		tpl += ' <h4 class="header">'+ items[i].short_name +'</h4>';
+		tpl += '<p class="desp">'+items[i].short_intro+'</p>';
+		tpl += '</li>';
+	}
+	$nodes = $(tpl);
+	$('#pic-ct').append($nodes);
+	return $nodes;
+}
+
+
+</script>
+
+
+</body>
+</html>
